@@ -55,22 +55,18 @@ def group_list(request, slug):
 
 
 def profile(request, username):
-    full_name = User.objects.get(username__exact=username)
-    post_list = Post.objects.all().order_by('-pub_date')
-    posts = Post.objects.order_by('-pub_date')
-    post_count = posts.count()
-    # author = get_object_or_404(User, username=username)
+    author = User.objects.get(username__exact=username)
+    
+    post_list = Post.objects.filter(author=author).order_by('-pub_date')
+    post_count = post_list.count()
+    
     paginator = Paginator(post_list, 10)
-
-    # Из URL извлекаем номер запрошенной страницы - это значение параметра page
     page_number = request.GET.get('page')
-
-    # Получаем набор записей для страницы с запрошенным номером
     page_obj = paginator.get_page(page_number)
 
     context = {
         'page_obj': page_obj,
-        'full_name': full_name,
+        'full_name': author,
         'post_count': post_count
     }
     return render(request, 'posts/profile.html', context)
