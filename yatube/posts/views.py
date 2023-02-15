@@ -56,10 +56,10 @@ def group_list(request, slug):
 
 def profile(request, username):
     author = User.objects.get(username__exact=username)
-    
+
     post_list = Post.objects.filter(author=author).order_by('-pub_date')
     post_count = post_list.count()
-    
+
     paginator = Paginator(post_list, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
