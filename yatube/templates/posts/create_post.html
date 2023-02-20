@@ -11,21 +11,26 @@
         <div class="col-md-8 p-5">
           <div class="card">
             <div class="card-header">       
-              Новый пост             
+
+              {% if is_edit %}Редактировать пост{% else %}Новый пост{% endif %}
             </div>
-            <div class="card-body">        
-              <form action="" method="post">
+            <div class="card-body">
+
+              <form method="post">
+
                 {% csrf_token %}
-                {{ form.as_table }}
+                  <span class="required text-danger" >*</span>
+                {{ form.as_p }}
+
                 <button type="submit" class="btn btn-primary">
-                  {% if is_edit %}
-                    Сохранить
-                  {% else %}
-                    Добавить
-                  {% endif %}               
+                  {% if is_edit %} Сохранить {% else %} Добавить
+                  {% endif %}
                 </button>
               </form>
+
+             </form>
             </div>
+
           </div>
         </div>
       </div>

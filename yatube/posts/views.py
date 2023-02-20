@@ -80,6 +80,7 @@ def post_create(request):
             post.save()
             return redirect('posts:profile', request.user)
 
+
     form = PostForm()
     return render(request, 'posts/create_post.html', {'form': form})
 
